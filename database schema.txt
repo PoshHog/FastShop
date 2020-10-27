@@ -1,0 +1,150 @@
+create database solution;
+use solution;
+create table customers(
+customerID int not null, 
+forename varchar(255),
+surname varchar(255), 
+dob date, 
+mobile bigint(10), 
+countryCode int(3),
+addressLine1 varchar(255), 
+postcode varchar(10), 
+email varchar(255) not null, 
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(customerID)
+);
+create table companies(
+companyID int not null, 
+companyName varchar(255) not null, 
+companyDescription varchar(255),
+phone bigint(10), 
+countryCode int(3),
+addressLine1 varchar(255), 
+postcode varchar(10), 
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(companyID)
+);
+create table customerAccounts(
+accountID int not null, 
+customerID int not null, 
+companyID int not null,
+balance int not null, 
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(accountID),
+foreign key(customerID) references customers(customerID), 
+foreign key(companyID) references companies(companyID)
+);
+create table transactions(
+transactionID int not null, 
+accountID int not null, 
+deliveryAddressLine1 varchar(255) not null, 
+deliveryPostcode varchar(10) not null, 
+transactionStatus varchar(255) not null,
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(transactionID),
+foreign key(accountID) references customerAccounts(accountID)
+);
+create table inventory(
+inventoryID int not null,
+productName varchar(255) not null, 
+productDescription varchar(255), 
+saleCompanyID int not null, 
+preferredSupplyCompanyID int not null,
+backupSupplyCompanyID int,
+quantity int not null, 
+barcode int, 
+weightKG float, 
+price int not null,
+autoRestock boolean not null,
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(inventoryID), 
+foreign key(saleCompanyID) references companies(companyID),
+foreign key(preferredSupplyCompanyID) references companies(companyID),
+foreign key(backupSupplyCompanyID) references companies(companyID)
+);
+create table businessAccounts(
+businessAccountID int not null,
+customerCompanyID int not null, 
+supplyCompanyID int not null, 
+balance int not null, 
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(businessAccountID), 
+foreign key(customerCompanyID) references companies(companyID), 
+foreign key(supplyCompanyID) references companies(companyID)
+);
+create table pos(
+POID int not null,
+BAID int not null, 
+deliveryAddressLine1 varchar(255) not null, 
+deliveryPostcode varchar(10) not null, 
+poStatus varchar(255) not null,
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(POID), 
+foreign key(BAID) references businessAccounts(businessAccountID)
+);
+create table supplies(
+supplyID int not null, 
+supplyName varchar(255) not null, 
+supplyDesc varchar(255), 
+companyID int not null, 
+weightKG float, 
+price int not null, 
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(supplyID), 
+foreign key(companyID) references companies(CompanyID)
+);
+create table customerOrders(
+orderID int not null, 
+transactionID int not null, 
+inventoryID int not null, 
+quantity int not null, 
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(orderID), 
+foreign key(transactionID) references transactions(transactionID), 
+foreign key(inventoryID) references inventory(inventoryID)
+);
+create table businessOrders(
+orderID int not null, 
+POID int not null, 
+supplyID int not null, 
+quantity int not null, 
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(orderID), 
+foreign key(POID) references pos(POID), 
+foreign key(supplyID) references supplies(supplyID)
+);
+create table couriers(
+courierID int not null, 
+courierName varchar(255), 
+reg varchar(255) not null, 
+location varchar(255), 
+availabilityStatus varchar(255) not null, 
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(courierID)
+);
+create table deliveries(
+deliveryID int not null, 
+courierID int not null, 
+collectionAddressLine1 varchar(255) not null, 
+collectionPostcode varchar(10) not null, 
+POID int, 
+transactionID int, 
+deliveryStatus enum("pending", "in progress", "complete") not null, 
+editLock boolean not null, 
+editLockTime timestamp on update current_timestamp,
+primary key(deliveryID),
+foreign key(courierID) references couriers(courierID), 
+foreign key(POID) references pos(POID), 
+foreign key(transactionID) references transactions(transactionID)
+);
