@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Documents
-as is bpmn.docx
+*.docx
