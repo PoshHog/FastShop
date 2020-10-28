@@ -1,7 +1,7 @@
 const express = require('express');
 require('express-async-errors');
 const cors = require('cors');
-const quiz = require('./services/quiz');
+const dbmanager = require('./services/db-manager');
 
 // This allows us to read environment variables from the .env file
 // (But, when the system runs in the cloud, it won't use the file)
@@ -15,33 +15,33 @@ app.use(cors());
 // This is just for SSL certificate verification!
 app.use('/.well-known/pki-validation', express.static('src/pki-validation/'));
 
-// Create or update a quiz, ready for playing later
+// Register a new customer
 app.post('/quiz', async (req, res) => {
     const id = await quiz.saveQuizAsync(req.body);
     res.status(200).json({ id });
 });
 
-// Get quiz (to review or edit it)
+// Start a session
 app.get('/quiz/:id', async (req, res) => {
     const id = req.params.id;
     const quizData = await quiz.getQuizAsync(id);
     res.status(200).json(quizData);
 });
 
-// Delete quiz
+// End a session
 app.delete('/quiz/:id', async (req, res) => {
     const id = req.params.id;
     await quiz.deleteQuizAsync(id);
     res.status(200).end();
 });
 
-// Get list of all quizzes
-app.get('/quiz', async (req, res) => {
-    const list = await quiz.getAllQuizzesAsync();
-    res.status(200).json(list);
+// Add a test customer
+app.get('/test', async (req, res) => {
+    const addcust = await dbmanager.addCustomer(1, "test@test.test", "test", "testy", "mctestface");
+    res.status(200).json(addcust);
 });
 
-// Start hosting a quiz (with given ID)
+// Add a product
 app.post('/host/:id', async (req, res) => {
     const id = req.params.id;
     const roomCode = await quiz.hostQuizAsync(id);
@@ -49,7 +49,7 @@ app.post('/host/:id', async (req, res) => {
     res.status(200).json(state);
 });
 
-// Join the quiz as a player
+// Make a transaction
 app.post('/join/:roomCode', async (req, res) => {
     const roomCode = req.params.roomCode;
     const playerName = req.body.playerName;
@@ -58,7 +58,7 @@ app.post('/join/:roomCode', async (req, res) => {
     res.status(200).json(state);
 });
 
-// Get state of quiz
+// Get all products
 app.get('/state/:roomCode/:playerName?', async (req, res) => {
     const roomCode = req.params.roomCode;
     const playerName = req.params.playerName;
@@ -66,7 +66,7 @@ app.get('/state/:roomCode/:playerName?', async (req, res) => {
     res.status(200).json(state);
 });
 
-// Move to next stage of the quiz
+// Get a transaction
 app.post('/next/:roomCode', async (req, res) => {
     const roomCode = req.params.roomCode;
     const finished = await quiz.nextStageAsync(roomCode);
@@ -78,7 +78,7 @@ app.post('/next/:roomCode', async (req, res) => {
     res.status(200).json(state);
 });
 
-// Answer a question
+// Edit customer details
 app.post('/answer/:roomCode/:playerName', async (req, res) => {
     const roomCode = req.params.roomCode;
     const playerName = req.params.playerName;
@@ -88,19 +88,41 @@ app.post('/answer/:roomCode/:playerName', async (req, res) => {
     res.status(200).json(state);
 });
 
-// Delete quiz
+// Edit a transaction 
 app.delete('/room/:roomCode', async (req, res) => {
     const roomCode = req.params.roomCode;
     await quiz.deleteRoomAsync(roomCode);
     res.status(200).end();
 });
 
-// Show version information
+// Cancel a transaction
 app.get('/version', (req, res) => {
     res.status(200).send({
         version: process.env.VERSION || 2
     });
 });
+
+// Edit a product
+
+// Add a courier
+
+// Edit a courier
+
+// Add a delivery
+
+// Edit a delivery
+
+// Add a supplier
+
+// Raise a PO
+
+// View a PO
+
+// View available roles
+
+// Get customer roles
+
+// Add roles for account
 
 // Catch-all handler
 app.all('*', (req, res) => {
