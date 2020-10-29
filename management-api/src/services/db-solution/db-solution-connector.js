@@ -4,7 +4,7 @@ var con = mysql.createConnection({
   host: "localhost",
   port: "3306",
   user: "api",
-  password: "management_api_verification"
+  password: "management_api_verification",
 });
 
 con.connect(function(err) {
