@@ -35,12 +35,15 @@ async function addCustomer(con, companyID, email, password, forename = null, sur
 
     sql = `${sqlInsert}) ${sqlValues});`
     console.log(sql);
-    con.query(sql, function (err, result) {
+    var ret;
+    await con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("1 record inserted, ID : "+result.insertId);
         customerID = result.insertId;
+        ret = customerID;
         addAccount(con, customerID, companyID, password);
     });
+    return ret;
 }
 
 async function addAccount(con, customerID, companyID, password){
