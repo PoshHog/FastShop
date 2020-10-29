@@ -1,0 +1,56 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(167, 223, 181);
+}
+
+.error {
+    color: darkred;
+    font-weight: bold;
+}
+
+.player {
+    border: 1px solid black;
+    background-color: lightblue;
+    padding: 4px;
+    margin-right: 8px;
+}
+
+.answer {
+    border: 1px solid gray;
+    padding: 4px;
+}
+
+.selectable {
+    cursor: pointer;
+}
+
+.selectable:hover:not(.selected) {
+    background-color: lightgray;
+}
+
+.selected {
+    background-color: gold;
+    border: 2px solid goldenrod;
+}
+
+.correct {
+    background-color: lightgreen;
+    border: 2px solid green;
+}
+
+.wrong {
+    background-color: lightpink;
+    border: 2px solid darksalmon;
+}
+
+.delay {
+    opacity: 0;
+    animation: fadeIn 0.25s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
