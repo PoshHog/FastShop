@@ -15,6 +15,16 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
         controller: 'LoginController'
     });
 
+    $routeProvider.when('/register', {
+        templateUrl: 'views/register.html',
+        controller: 'LoginController'
+    });
+
+    $routeProvider.when('/account', {
+        templateUrl: 'views/user/account.html',
+        controller: 'LoginController'
+    });
+
     $routeProvider.otherwise({
         templateUrl: 'views/not-found.view.html'
     })

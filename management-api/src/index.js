@@ -15,6 +15,62 @@ app.use(cors());
 // This is just for SSL certificate verification!
 app.use('/.well-known/pki-validation', express.static('src/pki-validation/'));
 
+// Log a user in
+app.get('/login/:companyID/:email/:password', async (req, res) => {
+    const companyID = req.params.companyID;
+    const email = req.params.email;
+    const password = req.params.password;
+
+    // TODO : 1. Check user exists and get ID & name, 2. create new session, 3. identify role, 4. return token
+
+    const ret = {'login':'valid', 'id':'1', 'name':'name', 'roles':['customer'], 'token':'somehash'};
+    res.status(200).json(ret);
+});
+
+// Register a user
+app.get('/register/:companyID/:email/:password/:fn/:sn/:num', async (req, res) => {
+    const companyID = req.params.companyID;
+    const email = req.params.email;
+    const password = req.params.password;
+    const forename = req.params.fn;
+    const surname = req.params.sn;
+    const num = req.params.num;
+
+
+    // TODO : 1. Check user exists, 2. create new user, 3. create new account, 4. create session, 5. return token
+
+    const ret = {'register':'valid', 'id':'1', 'token':'somehash'};
+    res.status(200).json(ret);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Register a new customer
 app.post('/quiz', async (req, res) => {
     const id = await quiz.saveQuizAsync(req.body);

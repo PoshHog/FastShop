@@ -18,47 +18,26 @@ factory('LoginService', ['$http', 'ConfigService', function($http, ConfigService
         const companyID = ConfigService.companyID;
         //const cryptEmail = CryptoJS.AES.encrypt(email, ConfigService.publicKey);
         //const cryptPass = CryptoJS.AES.encrypt(password, ConfigService.publicKey);
-        const url = `${base}login/${companyID}/${email}/${password}`
-        try {
-            const response = await $http.post(url, data);
-            const state = response.data;
-            return state;
-        } catch (error) {
-            handleError(error);
-        }
-    }
-
-    service.joinQuiz = async (roomCode, playerName) => {
-        const base = ConfigService.apiBase;
-        const url = `${base}join/${encodeURIComponent(roomCode)}`;
-        const data = { playerName: playerName };
-        try {
-            const response = await $http.post(url, data);
-            const state = response.data;
-            return state;
-        } catch (error) {
-            handleError(error);
-        }
-    }
-
-    service.getState = async function(roomCode, playerName) {
-        const base = ConfigService.apiBase;
-        const url = `${base}state/${encodeURIComponent(roomCode)}/${encodeURIComponent(playerName)}`;
+        const url = `${base}login/${companyID}/${email}/${password}`;
         try {
             const response = await $http.get(url);
-            return response.data;
+            const data = response.data;
+            return data;
         } catch (error) {
             handleError(error);
         }
     }
 
-    service.submitAnswer = async (roomCode, playerName, letter) => {
+    service.register = async (email, password, fn, sn, num) => {
         const base = ConfigService.apiBase;
-        const url = `${base}answer/${encodeURIComponent(roomCode)}/${encodeURIComponent(playerName)}`;
-        const data = { answer: letter };
+        const companyID = ConfigService.companyID;
+        //const cryptEmail = CryptoJS.AES.encrypt(email, ConfigService.publicKey);
+        //const cryptPass = CryptoJS.AES.encrypt(password, ConfigService.publicKey);
+        const url = `${base}register/${companyID}/${email}/${password}/${fn}/${sn}/${num}`;
         try {
-            const response = await $http.post(url, data);
-            return response.data;
+            const response = await $http.get(url);
+            const data = response.data;
+            return data;
         } catch (error) {
             handleError(error);
         }
