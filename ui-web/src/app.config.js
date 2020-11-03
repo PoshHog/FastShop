@@ -10,6 +10,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
         controller: 'HomeController'
     });
 
+    $routeProvider.when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginController'
+    });
+
     $routeProvider.otherwise({
         templateUrl: 'views/not-found.view.html'
     })

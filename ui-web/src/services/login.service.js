@@ -1,5 +1,5 @@
 angular.module('app').
-factory('PlayService', ['$http', 'ConfigService', function($http, ConfigService) {
+factory('LoginService', ['$http', 'ConfigService', function($http, ConfigService) {
 
     function handleError(error) {
         if (error?.status == -1) {
@@ -12,6 +12,21 @@ factory('PlayService', ['$http', 'ConfigService', function($http, ConfigService)
     }
 
     var service = {};
+
+    service.login = async (email, password) => {
+        const base = ConfigService.apiBase;
+        const companyID = ConfigService.companyID;
+        //const cryptEmail = CryptoJS.AES.encrypt(email, ConfigService.publicKey);
+        //const cryptPass = CryptoJS.AES.encrypt(password, ConfigService.publicKey);
+        const url = `${base}login/${companyID}/${email}/${password}`
+        try {
+            const response = await $http.post(url, data);
+            const state = response.data;
+            return state;
+        } catch (error) {
+            handleError(error);
+        }
+    }
 
     service.joinQuiz = async (roomCode, playerName) => {
         const base = ConfigService.apiBase;
