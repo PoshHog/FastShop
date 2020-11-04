@@ -1,0 +1,14 @@
+<div ng-show="currentAccountRoles">
+    <h1>Account management</h1>
+    <p>Account email : <input type="email" ng-model="email" placeholder="example@example.com"> <button ng-click="getAccount()">Search</button></p>
+    <button ng-click="addRole()">Add Role</button>
+    <table >
+        <thead>
+            <th>Role</th><th>Remove</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="role in roles"><td>{{role.name}}</td><td ng-click='remove(role.id)'>Remove</td></tr>
+        </tbody>
+    </table>
+    <p>{{currentAccount}}</p>
+</div>

@@ -16,6 +16,16 @@ angular.module('app').controller('LoginController', ['$scope', '$location', '$ro
                 $scope.primaryRole = $scope.roles[0];
                 if($scope.primaryRole == "customer"){
                     $location.path("/home").replace();
+                }else if($scope.primaryRole == "admin"){
+                    $location.path("/admin").replace();
+                }else if($scope.primaryRole == "servicer"){
+                    $location.path("/home").replace();
+                }else if($scope.primaryRole == "warehouse"){
+                    $location.path("/home").replace();
+                }else if($scope.primaryRole == "courier"){
+                    $location.path("/home").replace();
+                }else if($scope.primaryRole == "merketing"){
+                    $location.path("/home").replace();
                 }
             }else{
                 $scope.loginState = "Login"

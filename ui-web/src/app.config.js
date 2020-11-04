@@ -25,6 +25,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
         controller: 'LoginController'
     });
 
+    $routeProvider.when('/admin', {
+        templateUrl: 'views/admin/admin.html',
+        controller: 'AdminController'
+    });
+
     $routeProvider.otherwise({
         templateUrl: 'views/not-found.view.html'
     })

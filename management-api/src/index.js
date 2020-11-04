@@ -23,7 +23,7 @@ app.get('/login/:companyID/:email/:password', async (req, res) => {
 
     // TODO : 1. Check user exists and get ID & name, 2. create new session, 3. identify role, 4. return token
 
-    const ret = {'login':'valid', 'id':'1', 'name':'name', 'roles':['customer'], 'token':'somehash'};
+    const ret = {'login':'valid', 'id':'1', 'name':'name', 'roles':['admin'], 'token':'somehash'};
     res.status(200).json(ret);
 });
 
@@ -43,6 +43,29 @@ app.get('/register/:companyID/:email/:password/:fn/:sn/:num', async (req, res) =
     res.status(200).json(ret);
 });
 
+// Get account for company with given email
+app.get('/admin/:companyID/:token/:email', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as admin, 2. collect role info for email, 3. return info
+
+    const ret = {'token':'valid', 'accountid':'1', 'roles':[{'id':'1', 'name':'service'}, {'id':'2', 'name':'warehouse'}]};
+    res.status(200).json(ret);
+});
+
+// Remove role for account for company
+app.post('/admin/:companyID/:token/:accountid/:roleid', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const accountid = req.params.accountid;
+    const roleid = req.params.roleid;
+
+    // TODO : 1. Validate token as admin, 2. remove role for id
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
 
 
 
