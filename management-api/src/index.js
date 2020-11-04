@@ -55,7 +55,7 @@ app.get('/admin/:companyID/:token/:email', async (req, res) => {
 });
 
 // Remove role for account for company
-app.post('/admin/:companyID/:token/:accountid/:roleid', async (req, res) => {
+app.post('/admin/remove/:companyID/:token/:accountid/:roleid', async (req, res) => {
     const companyID = req.params.companyID;
     const token = req.params.token;
     const accountid = req.params.accountid;
@@ -64,6 +64,28 @@ app.post('/admin/:companyID/:token/:accountid/:roleid', async (req, res) => {
     // TODO : 1. Validate token as admin, 2. remove role for id
 
     const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Add role for account for company
+app.post('/admin/add/:companyID/:token/:accountid/:roleid', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const accountid = req.params.accountid;
+    const roleid = req.params.roleid;
+
+    // TODO : 1. Validate token as admin, 2. add role for id
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Get all available role types
+app.get('/admin/roles', async (req, res) => {
+    
+    // TODO : 1. Retrieve all role types, 2. return them
+
+    const ret = {'roles':[{'id':'1', 'name':'service'},{'id':'2', 'name':'warehouse'},{'id':'3', 'name':'courier'}]};
     res.status(200).json(ret);
 });
 
