@@ -18,8 +18,8 @@ angular.module('app').controller('LoginController', ['$scope', '$location', '$ro
                     $location.path("/home").replace();
                 }else if($scope.primaryRole == "admin"){
                     $location.path("/admin").replace();
-                }else if($scope.primaryRole == "servicer"){
-                    $location.path("/home").replace();
+                }else if($scope.primaryRole == "customerservice"){
+                    $location.path("/customerservice").replace();
                 }else if($scope.primaryRole == "warehouse"){
                     $location.path("/home").replace();
                 }else if($scope.primaryRole == "courier"){

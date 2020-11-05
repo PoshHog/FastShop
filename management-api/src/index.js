@@ -23,7 +23,7 @@ app.get('/login/:companyID/:email/:password', async (req, res) => {
 
     // TODO : 1. Check user exists and get ID & name, 2. create new session, 3. identify role, 4. return token
 
-    const ret = {'login':'valid', 'id':'1', 'name':'name', 'roles':['admin'], 'token':'somehash'};
+    const ret = {'login':'valid', 'id':'1', 'name':'name', 'roles':['customerservice'], 'token':'somehash'};
     res.status(200).json(ret);
 });
 
@@ -50,7 +50,7 @@ app.get('/admin/:companyID/:token/:email', async (req, res) => {
 
     // TODO : 1. Validate token as admin, 2. collect role info for email, 3. return info
 
-    const ret = {'token':'valid', 'accountid':'1', 'roles':[{'id':'1', 'name':'service'}, {'id':'2', 'name':'warehouse'}]};
+    const ret = {'token':'valid', 'accountid':'1', 'roles':[{'id':'1', 'name':'customerservice'}, {'id':'2', 'name':'warehouse'}]};
     res.status(200).json(ret);
 });
 
@@ -85,9 +85,16 @@ app.get('/admin/roles', async (req, res) => {
     
     // TODO : 1. Retrieve all role types, 2. return them
 
-    const ret = {'roles':[{'id':'1', 'name':'service'},{'id':'2', 'name':'warehouse'},{'id':'3', 'name':'courier'}]};
+    const ret = {'roles':[{'id':'1', 'name':'customerservice'},{'id':'2', 'name':'warehouse'},{'id':'3', 'name':'courier'}]};
     res.status(200).json(ret);
 });
+
+
+
+
+
+
+
 
 
 

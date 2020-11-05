@@ -29,6 +29,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
         templateUrl: 'views/admin/admin.html',
         controller: 'AdminController'
     });
+    
+    $routeProvider.when('/customerservice', {
+        templateUrl: 'views/customerservice/customers.html',
+        controller: 'CustomerserviceController'
+    });
 
     $routeProvider.otherwise({
         templateUrl: 'views/not-found.view.html'

@@ -29,10 +29,8 @@ angular.module('app').controller('AdminController', ['$scope', '$location', '$ro
                     }
                 });
             });
-            console.log(torem);
             torem.forEach(remRole =>{
                 $scope.availableRoles.splice($scope.availableRoles.indexOf(remRole), 1);
-                console.log('spliced');
             });
         }catch (error) {
             $scope.loginResult = error.message;
