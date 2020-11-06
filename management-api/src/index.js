@@ -30,7 +30,7 @@ app.get('/login/:companyID/:email/:password', async (req, res) => {
 
     // TODO : 1. Check user exists and get ID & name, 2. create new session, 3. identify role, 4. return token
 
-    const ret = {'login':'valid', 'id':'1', 'name':'name', 'roles':['customerservice'], 'token':'somehash'};
+    const ret = {'login':'valid', 'id':'1', 'name':'name', 'roles':['warehouse'], 'token':'somehash'};
     res.status(200).json(ret);
 });
 
@@ -213,6 +213,143 @@ app.post('/cancel/item/:companyID/:token/:id', async (req, res) => {
     const ret = {'token':'valid'};
     res.status(200).json(ret);
 });
+
+// Outgoing deliveries
+app.get('/warehouse/deliveries/:companyID/:token', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as warehouse, 2. get outgoing deliveries, 3. return them
+
+    const ret = {'token':'valid', 'deliveries':[
+        {'id':'1'},
+        {'id':'2'},
+        {'id':'3'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Incoming orders
+app.get('/warehouse/ordersin/:companyID/:token', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as warehouse, 2. get incoming orders, 3. return them
+
+    const ret = {'token':'valid', 'ordersIn':[
+        {'id':'1'},
+        {'id':'2'},
+        {'id':'3'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Outgoing delivery items
+app.get('/warehouse/deliveries/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as warehouse, 2. get an outgoing deliveries items, 3. return them
+
+    const ret = {'token':'valid', 'deliveryItems':[
+        {'id':'1', 'name':'Pot', 'quantity':'2'},
+        {'id':'2', 'name':'Tree', 'quantity':'2'},
+        {'id':'3', 'name':'Feeder', 'quantity':'2'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Incoming order items
+app.get('/warehouse/ordersin/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as warehouse, 2. get an incoming orders items, 3. return them
+
+    const ret = {'token':'valid', 'ordersInItems':[
+        {'id':'1', 'name':'Pot', 'quantity':'2'},
+        {'id':'2', 'name':'Tree', 'quantity':'2'},
+        {'id':'3', 'name':'Feeder', 'quantity':'2'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Mark a delivery as ready to be shipped
+app.post('/warehouse/deliveries/complete/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as warehouse, 2. mark delivery ID as ready to be shipped
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Mark incoming order as all present
+app.post('/warehouse/ordersin/complete/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as warehouse, 2. Mark a raised po as complete
+
+    const ret = {'token':'valid', 'ordersInItems':[
+        {'id':'1', 'name':'Pot', 'quantity':'2'},
+        {'id':'2', 'name':'Tree', 'quantity':'2'},
+        {'id':'3', 'name':'Feeder', 'quantity':'2'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Mark a item on an outgoing delivery as not deliverable
+app.post('/warehouse/deliveries/missing/:companyID/:token/:orderid/:itemid', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const orderid = req.params.orderid;
+    const itemid = req.params.itemid;
+
+    // TODO : 1. Validate token as warehouse, 2. add item to new delivery to retry
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Mark incoming item as missing
+app.post('/warehouse/ordersin/missing/:companyID/:token/:orderid/:itemid', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const orderid = req.params.orderid;
+    const itemid = req.params.itemid;
+
+    // TODO : 1. Validate token as warehouse, 2. Flag
+
+    const ret = {'token':'valid', 'ordersInItems':[
+        {'id':'1', 'name':'Pot', 'quantity':'2'},
+        {'id':'2', 'name':'Tree', 'quantity':'2'},
+        {'id':'3', 'name':'Feeder', 'quantity':'2'}
+    ]};
+    res.status(200).json(ret);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
