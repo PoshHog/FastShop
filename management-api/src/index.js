@@ -15,6 +15,13 @@ app.use(cors());
 // This is just for SSL certificate verification!
 app.use('/.well-known/pki-validation', express.static('src/pki-validation/'));
 
+function check(value){
+    if(value == "-"){
+        value = null;
+    }
+    return value;
+}
+
 // Log a user in
 app.get('/login/:companyID/:email/:password', async (req, res) => {
     const companyID = req.params.companyID;
@@ -89,15 +96,123 @@ app.get('/admin/roles', async (req, res) => {
     res.status(200).json(ret);
 });
 
+// Search for customer
+app.get('/customerservice/search/:companyID/:token/:email/:fn/:sn/:num/:postcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const email = req.params.email;
+    const fn = req.params.fn;
+    const sn = req.params.sn;
+    const num = req.params.num;
+    const postcode = req.params.postcode;
 
+    // TODO : 1. Validate token as customer service, 2. search for accounts by email (if provided), 3. search for accounts by other means, 4. return result
 
+    const ret = {'token':'valid', 'customers':[ {'id':'1', 'fn':'Test', 'sn':'first', 'email':'example@example.com', 'num':'', 'l1':'1', 'postcode':'NG13 5AD'},
+                                                {'id':'2', 'fn':'Test', 'sn':'second', 'email':'example2@example.com', 'num':'', 'l1':'', 'postcode':''},
+                                                {'id':'3', 'fn':'Test', 'sn':'third', 'email':'example3@example.com', 'num':'', 'l1':'', 'postcode':''}]};
+    res.status(200).json(ret);
+});
 
+// Edit a customers details
+app.post('/update/customer/:companyID/:token/:id/:fn/:sn/:email/:num/:l1/:postcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+    const email = req.params.email;
+    const fn = req.params.fn;
+    const sn = req.params.sn;
+    const num = req.params.num;
+    const l1 = req.params.l1;
+    const postcode = req.params.postcode;
 
+    // TODO : 1. Validate token as customer/service, 2. alter account by id
 
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
 
+// Search for a customers orders
+app.get('/search/orders/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const customerID = req.params.id;
 
+    // TODO : 1. Validate token as customer/service, 2. search for orders by accountID, 3. return result
 
+    const ret = {'token':'valid', 'orders':[{'id':'1', 'date':'03-11-2020', 'l1':'1', 'postcode':'NG13 5AD', 'status':'complete'},
+                                            {'id':'2', 'date':'04-11-2020', 'l1':'2', 'postcode':'NG13 8PH', 'status':'out for delivery'},
+                                            {'id':'3', 'date':'04-11-2020', 'l1':'2', 'postcode':'NG13 8PH', 'status':'warehouse'},
+                                            {'id':'4', 'date':'05-11-2020', 'l1':'3', 'postcode':'NG13 8ZL', 'status':'processing'}]};
+    res.status(200).json(ret);
+});
 
+// Edit an orders details
+app.post('/update/order/:companyID/:token/:id/:l1/:postcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+    const l1 = req.params.l1;
+    const postcode = req.params.postcode;
+
+    // TODO : 1. Validate token as customer/service, 2. alter order
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Cancel an order
+app.post('/cancel/order/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as customer/service, 2. cancel order
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Search for a customers order items
+app.get('/search/orders/items/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const orderID = req.params.id;
+
+    // TODO : 1. Validate token as customer/service, 2. search for items by orderID, 3. return result
+
+    const ret = {'token':'valid', 'items':[{'id':'1', 'name':'Top', 'quantity':'1'},
+                                            {'id':'2', 'name':'Jean', 'quantity':'2'},
+                                            {'id':'3', 'name':'Fleece', 'quantity':'2'},
+                                            {'id':'4', 'name':'Jogger', 'quantity':'3'}]};
+    res.status(200).json(ret);
+});
+
+// Edit an orders details
+app.post('/update/item/:companyID/:token/:id/:quantity', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+    const quantity = req.params.quantity;
+    const postcode = req.params.postcode;
+
+    // TODO : 1. Validate token as customer/service, 2. alter item
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Cancel an order
+app.post('/cancel/item/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as customer/service, 2. cancel item
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
 
 
 
