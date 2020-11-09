@@ -40,6 +40,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
         controller: 'WarehouseController'
     });
 
+    $routeProvider.when('/courier', {
+        templateUrl: 'views/courier/schedule.html',
+        controller: 'CourierController'
+    });
+
     $routeProvider.otherwise({
         templateUrl: 'views/not-found.view.html'
     })

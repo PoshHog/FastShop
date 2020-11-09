@@ -136,7 +136,7 @@ primary key(courierID)
 );
 create table deliveries(
 deliveryID int not null auto_increment, 
-courierID int not null, 
+courierID int, 
 collectionAddressLine1 varchar(255) not null, 
 collectionPostcode varchar(10) not null, 
 POID int, 

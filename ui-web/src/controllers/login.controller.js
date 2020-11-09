@@ -14,6 +14,7 @@ angular.module('app').controller('LoginController', ['$scope', '$location', '$ro
                 localStorage.setItem("fastshop.loginName", response.name);
                 $scope.roles = response.roles;
                 $scope.primaryRole = $scope.roles[0];
+                console.log($scope.primaryRole)
                 if($scope.primaryRole == "customer"){
                     $location.path("/home").replace();
                 }else if($scope.primaryRole == "admin"){
@@ -23,7 +24,7 @@ angular.module('app').controller('LoginController', ['$scope', '$location', '$ro
                 }else if($scope.primaryRole == "warehouse"){
                     $location.path("/warehouse").replace();
                 }else if($scope.primaryRole == "courier"){
-                    $location.path("/home").replace();
+                    $location.path("/courier").replace();
                 }else if($scope.primaryRole == "merketing"){
                     $location.path("/home").replace();
                 }

@@ -335,6 +335,91 @@ app.post('/warehouse/ordersin/missing/:companyID/:token/:orderid/:itemid', async
 });
 
 
+// Unassigned deliveries
+app.get('/courier/deliveries/available/:companyID/:token', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as courier, 2. get unassigned deliveries, 3. return them
+
+    const ret = {'token':'valid', 'deliveries':[
+        {'id':'1', 'pickup':'xxxx', 'dropoff':'xxxx'},
+        {'id':'2', 'pickup':'xxxx', 'dropoff':'xxxx'},
+        {'id':'3', 'pickup':'xxxx', 'dropoff':'xxxx'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Schedule of deliveries
+app.get('/courier/deliveries/schedule/:companyID/:token', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as courier, 2. get shedule, 3. return it
+
+    const ret = {'token':'valid', 'schedule':[
+        {'id':'1', 'pickup':'xxxx', 'dropoff':'xxxx'},
+        {'id':'2', 'pickup':'xxxx', 'dropoff':'xxxx'},
+        {'id':'3', 'pickup':'xxxx', 'dropoff':'xxxx'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Schedules delivery items
+app.get('/courier/deliveries/items/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as courier, 2. get all deliveries items, 3. return them
+
+    const ret = {'token':'valid', 'deliveryItems':[
+        {'id':'1', 'name':'Pot', 'quantity':'2'},
+        {'id':'2', 'name':'Tree', 'quantity':'2'},
+        {'id':'3', 'name':'Feeder', 'quantity':'2'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Accept a delivery
+app.post('/courier/deliveries/accept/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as courier, 2. accept delivery, 3. return them
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Mark a delivery as ready to be shipped
+app.post('/courier/deliveries/complete/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as courier, 2. mark delivery ID as ready to be delivered
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Mark a item while out for delivery as missing
+app.post('/courier/deliveries/missing/:companyID/:token/:orderid/:itemid', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const orderid = req.params.orderid;
+    const itemid = req.params.itemid;
+
+    // TODO : 1. Validate token as courier, 2. add item to new delivery to retry
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+
+
 
 
 
