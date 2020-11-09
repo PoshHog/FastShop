@@ -26,7 +26,7 @@ angular.module('app').controller('LoginController', ['$scope', '$location', '$ro
                 }else if($scope.primaryRole == "courier"){
                     $location.path("/courier").replace();
                 }else if($scope.primaryRole == "merketing"){
-                    $location.path("/home").replace();
+                    $location.path("/marketing").replace();
                 }
             }else{
                 $scope.loginState = "Login"

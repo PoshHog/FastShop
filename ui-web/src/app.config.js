@@ -45,6 +45,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
         controller: 'CourierController'
     });
 
+    $routeProvider.when('/marketing', {
+        templateUrl: 'views/marketing/marketing.html',
+        controller: 'MarketingController'
+    });
+
     $routeProvider.otherwise({
         templateUrl: 'views/not-found.view.html'
     })

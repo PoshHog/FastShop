@@ -418,7 +418,100 @@ app.post('/courier/deliveries/missing/:companyID/:token/:orderid/:itemid', async
     res.status(200).json(ret);
 });
 
+// Search for companies
+app.get('/company/search/:companyID/:token/:criteria', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const criteria = req.params.criteria;
 
+    // TODO : 1. Validate token as marketing, 2. search for all companies matchig name or description 3. return company info
+
+    const ret = {'token':'valid', 'suppliers':[
+        {'id':'1', 'name':'company1', 'desc':'A company supplying X', 'cc':'44', 'num':'7777777777'},
+        {'id':'2', 'name':'company2', 'desc':'A company supplying Y', 'cc':'44', 'num':'7777777778'},
+        {'id':'3', 'name':'company3', 'desc':'A company supplying Z', 'cc':'44', 'num':'7777777779'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Get the website companies inventory
+app.get('/company/inventory/:companyID/:token', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as marketing, 2. get own inventory 3. return
+
+    const ret = {'token':'valid', 'suppliers':[
+        {'id':'1', 'name':'item1', 'desc':'An item', 'quantity':'10', 'price':'15.99'},
+        {'id':'2', 'name':'item2', 'desc':'An item', 'quantity':'5', 'price':'26.99'},
+        {'id':'3', 'name':'item3', 'desc':'An item', 'quantity':'18', 'price':'3.99'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Get another companies inventory
+app.get('/company/inventory/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.token;
+
+    // TODO : 1. Validate token as marketing, 2. get 'id's' inventory 3. return
+
+    const ret = {'token':'valid', 'suppliers':[
+        {'id':'1', 'name':'item1', 'desc':'An item', 'quantity':'10', 'price':'15.99'},
+        {'id':'2', 'name':'item2', 'desc':'An item', 'quantity':'5', 'price':'26.99'},
+        {'id':'3', 'name':'item3', 'desc':'An item', 'quantity':'18', 'price':'3.99'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Add a supplier
+app.post('/company/add/:companyID/:token/:name/:desc/:cc/:num/:l1/:postcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const name = req.params.name;
+    const desc = req.params.desc;
+    const cc = req.params.cc;
+    const num = req.params.num;
+    const l1 = req.params.l1;
+    const poscode = req.params.poscode;
+
+    // TODO : 1. Validate token as marketing, 2. Add supplier
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Edit an inventory item
+app.post('/company/inventory/edit/:companyID/:token/:id/:name/:desc/:quantity/:price/:weight/:barcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const inventoryID = req.params.id;
+    const name = req.params.name;
+    const desc = req.params.desc;
+    const quantity = req.params.quantity;
+    const price = req.params.price;
+    const weight = req.params.weight;
+    const barcode = req.params.barcode;
+
+    // TODO : 1. Validate token as marketing, 2. Edit the item 3. if the id is null make a new item
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Order an item
+app.post('/company/inventory/order/:companyID/:token/:id/:quantity', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const inventoryID = req.params.id;
+    const quantity = req.params.quantity;
+
+    // TODO : 1. Validate token as marketing, 2. Order the quantity of the item through the pipeline
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
 
 
 
