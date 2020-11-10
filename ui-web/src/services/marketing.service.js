@@ -13,10 +13,10 @@ factory('MarketingService', ['$http', 'ConfigService', function($http, ConfigSer
 
     var service = {};
 
-    service.search = async (token, criteria) => {
+    service.searchCompanies = async (token, criteria) => {
         const base = ConfigService.apiBase;
         const companyID = ConfigService.companyID;
-        const url = `${base}company/search/${companyID}/${token}/${criteria}`;
+        const url = `${base}company/search/${companyID}/${token}/${ConfigService.check(criteria)}`;
         try {
             const response = await $http.get(url);
             const data = response.data;
@@ -26,15 +26,23 @@ factory('MarketingService', ['$http', 'ConfigService', function($http, ConfigSer
         }
     }
 
-    service.getInventory = async (token, id = null) => {
+    service.getInventory = async (token) => {
         const base = ConfigService.apiBase;
         const companyID = ConfigService.companyID;
-        const url;
-        if(criteria == null){
-            url = `${base}company/inventory/${companyID}/${token}`;
-        }else{
-            url = `${base}company/inventory/${companyID}/${token}/${id}`;
+        const url = `${base}company/inventory/${companyID}/${token}`;
+        try {
+            const response = await $http.get(url);
+            const data = response.data;
+            return data;
+        } catch (error) {
+            handleError(error);
         }
+    }
+
+    service.getInventory = async (token, id) => {
+        const base = ConfigService.apiBase;
+        const companyID = ConfigService.companyID;
+        const url = `${base}company/inventory/${companyID}/${token}/${id}`;
         try {
             const response = await $http.get(url);
             const data = response.data;
@@ -61,6 +69,19 @@ factory('MarketingService', ['$http', 'ConfigService', function($http, ConfigSer
         const base = ConfigService.apiBase;
         const companyID = ConfigService.companyID;
         const url = `${base}company/inventory/edit/${companyID}/${token}/${id}/${name}/${desc}/${quantity}/${price}/${weight}/${barcode}`;
+        try {
+            const response = await $http.post(url);
+            const data = response.data;
+            return data;
+        } catch (error) {
+            handleError(error);
+        }
+    }
+
+    service.addItem = async(token, supplierID, name, desc, quantity, price, weight, barcode) => {
+        const base = ConfigService.apiBase;
+        const companyID = ConfigService.companyID;
+        const url = `${base}company/inventory/add/${companyID}/${token}/${supplierID}/${name}/${desc}/${quantity}/${price}/${weight}/${barcode}`;
         try {
             const response = await $http.post(url);
             const data = response.data;

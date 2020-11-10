@@ -30,7 +30,7 @@ app.get('/login/:companyID/:email/:password', async (req, res) => {
 
     // TODO : 1. Check user exists and get ID & name, 2. create new session, 3. identify role, 4. return token
 
-    const ret = {'login':'valid', 'id':'1', 'name':'name', 'roles':['warehouse'], 'token':'somehash'};
+    const ret = {'login':'valid', 'id':'1', 'name':'name', 'roles':['marketing'], 'token':'somehash'};
     res.status(200).json(ret);
 });
 
@@ -343,9 +343,9 @@ app.get('/courier/deliveries/available/:companyID/:token', async (req, res) => {
     // TODO : 1. Validate token as courier, 2. get unassigned deliveries, 3. return them
 
     const ret = {'token':'valid', 'deliveries':[
-        {'id':'1', 'pickup':'xxxx', 'dropoff':'xxxx'},
-        {'id':'2', 'pickup':'xxxx', 'dropoff':'xxxx'},
-        {'id':'3', 'pickup':'xxxx', 'dropoff':'xxxx'}
+        {'id':'1', 'pickup':'d1', 'dropoff':'p1'},
+        {'id':'2', 'pickup':'d2', 'dropoff':'p2'},
+        {'id':'3', 'pickup':'d3', 'dropoff':'p3'}
     ]};
     res.status(200).json(ret);
 });
@@ -358,9 +358,9 @@ app.get('/courier/deliveries/schedule/:companyID/:token', async (req, res) => {
     // TODO : 1. Validate token as courier, 2. get shedule, 3. return it
 
     const ret = {'token':'valid', 'schedule':[
-        {'id':'1', 'pickup':'xxxx', 'dropoff':'xxxx'},
-        {'id':'2', 'pickup':'xxxx', 'dropoff':'xxxx'},
-        {'id':'3', 'pickup':'xxxx', 'dropoff':'xxxx'}
+        {'id':'1', 'pickup':'d4', 'dropoff':'p4'},
+        {'id':'2', 'pickup':'d5', 'dropoff':'p5'},
+        {'id':'3', 'pickup':'d6', 'dropoff':'p6'}
     ]};
     res.status(200).json(ret);
 });
@@ -441,7 +441,7 @@ app.get('/company/inventory/:companyID/:token', async (req, res) => {
 
     // TODO : 1. Validate token as marketing, 2. get own inventory 3. return
 
-    const ret = {'token':'valid', 'suppliers':[
+    const ret = {'token':'valid', 'items':[
         {'id':'1', 'name':'item1', 'desc':'An item', 'quantity':'10', 'price':'15.99'},
         {'id':'2', 'name':'item2', 'desc':'An item', 'quantity':'5', 'price':'26.99'},
         {'id':'3', 'name':'item3', 'desc':'An item', 'quantity':'18', 'price':'3.99'}
@@ -457,7 +457,7 @@ app.get('/company/inventory/:companyID/:token/:id', async (req, res) => {
 
     // TODO : 1. Validate token as marketing, 2. get 'id's' inventory 3. return
 
-    const ret = {'token':'valid', 'suppliers':[
+    const ret = {'token':'valid', 'items':[
         {'id':'1', 'name':'item1', 'desc':'An item', 'quantity':'10', 'price':'15.99'},
         {'id':'2', 'name':'item2', 'desc':'An item', 'quantity':'5', 'price':'26.99'},
         {'id':'3', 'name':'item3', 'desc':'An item', 'quantity':'18', 'price':'3.99'}
@@ -494,7 +494,25 @@ app.post('/company/inventory/edit/:companyID/:token/:id/:name/:desc/:quantity/:p
     const weight = req.params.weight;
     const barcode = req.params.barcode;
 
-    // TODO : 1. Validate token as marketing, 2. Edit the item 3. if the id is null make a new item
+    // TODO : 1. Validate token as marketing, 2. Edit the item
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Add an inventory item
+app.post('/company/inventory/add/:companyID/:token/:id/:name/:desc/:quantity/:price/:weight/:barcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const supplyCompanyID = req.params.id;
+    const name = req.params.name;
+    const desc = req.params.desc;
+    const quantity = req.params.quantity;
+    const price = req.params.price;
+    const weight = req.params.weight;
+    const barcode = req.params.barcode;
+
+    // TODO : 1. Validate token as marketing, 2. Add the item
 
     const ret = {'token':'valid'};
     res.status(200).json(ret);

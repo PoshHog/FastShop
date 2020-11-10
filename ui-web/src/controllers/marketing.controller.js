@@ -2,13 +2,14 @@ angular.module('app').controller('MarketingController', ['$scope', '$location', 
     
     $scope.view='suppliers';
     $scope.viewSupplier='all';
-    $scope.itemEdit = false;
+    $scope.itemEdit = 'false';
+    $scope.addItemShow = false;
 
     $scope.search = async function(criteria){
         try {
             result = await MarketingService.searchCompanies(localStorage.getItem('fastshop.token'), criteria);
             if(result.token == 'valid'){
-                $scope.suplierResult = result.suppliers;
+                $scope.supplierResult = result.suppliers;
             }
         } catch (error) {
 
@@ -56,6 +57,21 @@ angular.module('app').controller('MarketingController', ['$scope', '$location', 
         }finally{
             $scope.$applyAsync();
         }
+    }
+
+    $scope.addItem = async function(){
+        try{
+            result = await MarketingService.addItem(localStorage.getItem('fastshop.token'), $scope.viewSupplier.id, $scope.addItemName, $scope.addItemDesc, $scope.addItemQuantity, $scope.addItemPrice, $scope.addItemWeight, $scope.addItemBarcode);
+            if(result.token == 'valid'){
+                $scope.addItemShow = false;
+                await $scope.viewSupplierInventory(viewSupplier);
+            }
+        }catch (error){
+
+        }finally{
+            $scope.$applyAsync;
+        }
+
     }
 
     $scope.reOrder = async function(item){

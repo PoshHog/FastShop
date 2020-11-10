@@ -1,5 +1,5 @@
 angular.module('app').controller('CourierController', ['$scope', '$location', '$route', 'CourierService', function ($scope, $location, $route, CourierService) {
-    $scope.view = 'deliveries';
+    $scope.view = 'schedule';
     
     $scope.getAvailableDeliveries = async function(){
         try{

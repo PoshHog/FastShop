@@ -25,7 +25,7 @@ angular.module('app').controller('LoginController', ['$scope', '$location', '$ro
                     $location.path("/warehouse").replace();
                 }else if($scope.primaryRole == "courier"){
                     $location.path("/courier").replace();
-                }else if($scope.primaryRole == "merketing"){
+                }else if($scope.primaryRole == "marketing"){
                     $location.path("/marketing").replace();
                 }
             }else{
