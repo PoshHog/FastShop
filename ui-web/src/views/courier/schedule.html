@@ -1,0 +1,58 @@
+<div>
+
+    <h1>Deliveries</h1>
+    <button ng-click="view='available'">Available</button>
+    <button ng-click="view='schedule'">Schedule</button>
+    <div ng-show="view=='available'">
+        <h3>Available Deliveries</h3>
+        <table >
+            <thead>
+                <th>Pick-Up</th><th>Drop-Off</th><th>Accept</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="delivery in deliveriesResult">
+                    <td>{{delivery.pickup}}</td>
+                    <td>{{delivery.dropoff}}</td>
+                    <td><button ng-click='acceptDelivery(delivery)'>Accept</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-show="view=='schedule'">
+        <h3>Schdedule</h3>
+        <table >
+            <thead>
+                <th>Pick-Up</th><th>Drop-Off</th><th>View</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="delivery in scheduleResult">
+                    <td>{{delivery.pickup}}</td>
+                    <td>{{delivery.dropoff}}</td>
+                    <td><button ng-click='viewDelivery(delivery)'>View</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-show="view=='deliveryItems'">
+        <h3>Delivery : {{currentDelivery.pickup}} - {{currentDelivery.dropoff}}</h3>
+        <table >
+            <thead>
+                <th>Product</th><th>Quantity</th><th>Complete</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in deliveryItemsResult">
+                    <td>{{item.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>
+                        <a ng-hide="item.complete!=undefined"><button ng-click='completeItem(item)'>Yes</button> / <button ng-click="incompleteItem(item)">No</button></a>
+                        <a ng-show="item.complete==true" style="color: green;">O</a>
+                        <a ng-show="item.complete==false" style="color: red;">X</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="view='schedule'">Back</button>
+    </div>
+</div>

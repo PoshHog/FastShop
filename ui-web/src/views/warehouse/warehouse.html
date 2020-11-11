@@ -1,0 +1,79 @@
+<div>
+
+    <h1>Warehouse</h1>
+    <button ng-click="view='deliveries'">Deliveries Out</button>
+    <button ng-click="view='ordersIn'">Orders In</button>
+    <div ng-show="view=='deliveries'">
+        <h3>Deliveries Out</h3>
+        <table >
+            <thead>
+                <th>Delivery</th><th>View</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="delivery in deliveriesResult">
+                    <td>{{delivery.id}}</td>
+                    <td ng-click='viewDelivery(delivery)'>View</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-show="view=='deliveryItems'">
+        <h3>Delivery - {{currentDelivery.id}}</h3>
+        <table >
+            <thead>
+                <th>Product</th><th>Quantity</th><th>Complete</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in deliveryItemsResult">
+                    <td>{{item.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>
+                        <a ng-hide="item.complete!=undefined"><button ng-click='completeItem(item)'>Yes</button> / <button ng-click="incompleteItem(item)">No</button></a>
+                        <a ng-show="item.complete==true" style="color: green;">O</a>
+                        <a ng-show="item.complete==false" style="color: red;">X</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="view='deliveries'">Back</button>
+    </div>
+
+    <div ng-show="view=='ordersIn'">
+        <h3>Deliveries Out</h3>
+        <table >
+            <thead>
+                <th>Order</th><th>View</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in ordersInResult">
+                    <td>{{order.id}}</td>
+                    <td ng-click='viewOrder(order)'>View</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div ng-show="view=='itemsIn'">
+        <h3>Order - {{currentOrderIn.id}}</h3>
+        <table >
+            <thead>
+                <th>Product</th><th>Quantity</th><th>Present</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in ordersInItemsResult">
+                    <td>{{item.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>
+                        <a ng-hide="item.complete!=undefined"><button ng-click='presentItem(item)'>Yes</button> / <button ng-click="missingItem(item)">No</button></a>
+                        <a ng-show="item.complete==true" style="color: green;">O</a>
+                        <a ng-show="item.complete==false" style="color: red;">X</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="view='ordersIn'">Back</button>
+    </div>
+
+</div>

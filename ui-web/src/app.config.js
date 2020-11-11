@@ -10,6 +10,46 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
         controller: 'HomeController'
     });
 
+    $routeProvider.when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginController'
+    });
+
+    $routeProvider.when('/register', {
+        templateUrl: 'views/register.html',
+        controller: 'LoginController'
+    });
+
+    $routeProvider.when('/account', {
+        templateUrl: 'views/user/account.html',
+        controller: 'LoginController'
+    });
+
+    $routeProvider.when('/admin', {
+        templateUrl: 'views/admin/admin.html',
+        controller: 'AdminController'
+    });
+    
+    $routeProvider.when('/customerservice', {
+        templateUrl: 'views/customerservice/customers.html',
+        controller: 'CustomerserviceController'
+    });
+
+    $routeProvider.when('/warehouse', {
+        templateUrl: 'views/warehouse/warehouse.html',
+        controller: 'WarehouseController'
+    });
+
+    $routeProvider.when('/courier', {
+        templateUrl: 'views/courier/schedule.html',
+        controller: 'CourierController'
+    });
+
+    $routeProvider.when('/marketing', {
+        templateUrl: 'views/marketing/marketing.html',
+        controller: 'MarketingController'
+    });
+
     $routeProvider.otherwise({
         templateUrl: 'views/not-found.view.html'
     })

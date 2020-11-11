@@ -15,6 +15,562 @@ app.use(cors());
 // This is just for SSL certificate verification!
 app.use('/.well-known/pki-validation', express.static('src/pki-validation/'));
 
+function check(value){
+    if(value == "-"){
+        value = null;
+    }
+    return value;
+}
+
+// Log a user in
+app.get('/login/:companyID/:email/:password', async (req, res) => {
+    const companyID = req.params.companyID;
+    const email = req.params.email;
+    const password = req.params.password;
+
+    // TODO : 1. Check user exists and get ID & name, 2. create new session, 3. identify role, 4. return token
+
+    const ret = {'login':'valid', 'id':'1', 'name':'name', 'roles':['marketing'], 'token':'somehash'};
+    res.status(200).json(ret);
+});
+
+// Register a user
+app.get('/register/:companyID/:email/:password/:fn/:sn/:num', async (req, res) => {
+    const companyID = req.params.companyID;
+    const email = req.params.email;
+    const password = req.params.password;
+    const forename = req.params.fn;
+    const surname = req.params.sn;
+    const num = req.params.num;
+
+
+    // TODO : 1. Check user exists, 2. create new user, 3. create new account, 4. create session, 5. return token
+
+    const ret = {'register':'valid', 'id':'1', 'token':'somehash'};
+    res.status(200).json(ret);
+});
+
+// Get account for company with given email
+app.get('/admin/:companyID/:token/:email', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as admin, 2. collect role info for email, 3. return info
+
+    const ret = {'token':'valid', 'accountid':'1', 'roles':[{'id':'1', 'name':'customerservice'}, {'id':'2', 'name':'warehouse'}]};
+    res.status(200).json(ret);
+});
+
+// Remove role for account for company
+app.post('/admin/remove/:companyID/:token/:accountid/:roleid', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const accountid = req.params.accountid;
+    const roleid = req.params.roleid;
+
+    // TODO : 1. Validate token as admin, 2. remove role for id
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Add role for account for company
+app.post('/admin/add/:companyID/:token/:accountid/:roleid', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const accountid = req.params.accountid;
+    const roleid = req.params.roleid;
+
+    // TODO : 1. Validate token as admin, 2. add role for id
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Get all available role types
+app.get('/admin/roles', async (req, res) => {
+    
+    // TODO : 1. Retrieve all role types, 2. return them
+
+    const ret = {'roles':[{'id':'1', 'name':'customerservice'},{'id':'2', 'name':'warehouse'},{'id':'3', 'name':'courier'}]};
+    res.status(200).json(ret);
+});
+
+// Search for customer
+app.get('/customerservice/search/:companyID/:token/:email/:fn/:sn/:num/:postcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const email = req.params.email;
+    const fn = req.params.fn;
+    const sn = req.params.sn;
+    const num = req.params.num;
+    const postcode = req.params.postcode;
+
+    // TODO : 1. Validate token as customer service, 2. search for accounts by email (if provided), 3. search for accounts by other means, 4. return result
+
+    const ret = {'token':'valid', 'customers':[ {'id':'1', 'fn':'Test', 'sn':'first', 'email':'example@example.com', 'num':'', 'l1':'1', 'postcode':'NG13 5AD'},
+                                                {'id':'2', 'fn':'Test', 'sn':'second', 'email':'example2@example.com', 'num':'', 'l1':'', 'postcode':''},
+                                                {'id':'3', 'fn':'Test', 'sn':'third', 'email':'example3@example.com', 'num':'', 'l1':'', 'postcode':''}]};
+    res.status(200).json(ret);
+});
+
+// Edit a customers details
+app.post('/update/customer/:companyID/:token/:id/:fn/:sn/:email/:num/:l1/:postcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+    const email = req.params.email;
+    const fn = req.params.fn;
+    const sn = req.params.sn;
+    const num = req.params.num;
+    const l1 = req.params.l1;
+    const postcode = req.params.postcode;
+
+    // TODO : 1. Validate token as customer/service, 2. alter account by id
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Search for a customers orders
+app.get('/search/orders/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const customerID = req.params.id;
+
+    // TODO : 1. Validate token as customer/service, 2. search for orders by accountID, 3. return result
+
+    const ret = {'token':'valid', 'orders':[{'id':'1', 'date':'03-11-2020', 'l1':'1', 'postcode':'NG13 5AD', 'status':'complete'},
+                                            {'id':'2', 'date':'04-11-2020', 'l1':'2', 'postcode':'NG13 8PH', 'status':'out for delivery'},
+                                            {'id':'3', 'date':'04-11-2020', 'l1':'2', 'postcode':'NG13 8PH', 'status':'warehouse'},
+                                            {'id':'4', 'date':'05-11-2020', 'l1':'3', 'postcode':'NG13 8ZL', 'status':'processing'}]};
+    res.status(200).json(ret);
+});
+
+// Edit an orders details
+app.post('/update/order/:companyID/:token/:id/:l1/:postcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+    const l1 = req.params.l1;
+    const postcode = req.params.postcode;
+
+    // TODO : 1. Validate token as customer/service, 2. alter order
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Cancel an order
+app.post('/cancel/order/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as customer/service, 2. cancel order
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Search for a customers order items
+app.get('/search/orders/items/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const orderID = req.params.id;
+
+    // TODO : 1. Validate token as customer/service, 2. search for items by orderID, 3. return result
+
+    const ret = {'token':'valid', 'items':[{'id':'1', 'name':'Top', 'quantity':'1'},
+                                            {'id':'2', 'name':'Jean', 'quantity':'2'},
+                                            {'id':'3', 'name':'Fleece', 'quantity':'2'},
+                                            {'id':'4', 'name':'Jogger', 'quantity':'3'}]};
+    res.status(200).json(ret);
+});
+
+// Edit an orders details
+app.post('/update/item/:companyID/:token/:id/:quantity', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+    const quantity = req.params.quantity;
+    const postcode = req.params.postcode;
+
+    // TODO : 1. Validate token as customer/service, 2. alter item
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Cancel an order
+app.post('/cancel/item/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as customer/service, 2. cancel item
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Outgoing deliveries
+app.get('/warehouse/deliveries/:companyID/:token', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as warehouse, 2. get outgoing deliveries, 3. return them
+
+    const ret = {'token':'valid', 'deliveries':[
+        {'id':'1'},
+        {'id':'2'},
+        {'id':'3'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Incoming orders
+app.get('/warehouse/ordersin/:companyID/:token', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as warehouse, 2. get incoming orders, 3. return them
+
+    const ret = {'token':'valid', 'ordersIn':[
+        {'id':'1'},
+        {'id':'2'},
+        {'id':'3'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Outgoing delivery items
+app.get('/warehouse/deliveries/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as warehouse, 2. get an outgoing deliveries items, 3. return them
+
+    const ret = {'token':'valid', 'deliveryItems':[
+        {'id':'1', 'name':'Pot', 'quantity':'2'},
+        {'id':'2', 'name':'Tree', 'quantity':'2'},
+        {'id':'3', 'name':'Feeder', 'quantity':'2'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Incoming order items
+app.get('/warehouse/ordersin/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as warehouse, 2. get an incoming orders items, 3. return them
+
+    const ret = {'token':'valid', 'ordersInItems':[
+        {'id':'1', 'name':'Pot', 'quantity':'2'},
+        {'id':'2', 'name':'Tree', 'quantity':'2'},
+        {'id':'3', 'name':'Feeder', 'quantity':'2'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Mark a delivery as ready to be shipped
+app.post('/warehouse/deliveries/complete/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as warehouse, 2. mark delivery ID as ready to be shipped
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Mark incoming order as all present
+app.post('/warehouse/ordersin/complete/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as warehouse, 2. Mark a raised po as complete
+
+    const ret = {'token':'valid', 'ordersInItems':[
+        {'id':'1', 'name':'Pot', 'quantity':'2'},
+        {'id':'2', 'name':'Tree', 'quantity':'2'},
+        {'id':'3', 'name':'Feeder', 'quantity':'2'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Mark a item on an outgoing delivery as not deliverable
+app.post('/warehouse/deliveries/missing/:companyID/:token/:orderid/:itemid', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const orderid = req.params.orderid;
+    const itemid = req.params.itemid;
+
+    // TODO : 1. Validate token as warehouse, 2. add item to new delivery to retry
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Mark incoming item as missing
+app.post('/warehouse/ordersin/missing/:companyID/:token/:orderid/:itemid', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const orderid = req.params.orderid;
+    const itemid = req.params.itemid;
+
+    // TODO : 1. Validate token as warehouse, 2. Flag
+
+    const ret = {'token':'valid', 'ordersInItems':[
+        {'id':'1', 'name':'Pot', 'quantity':'2'},
+        {'id':'2', 'name':'Tree', 'quantity':'2'},
+        {'id':'3', 'name':'Feeder', 'quantity':'2'}
+    ]};
+    res.status(200).json(ret);
+});
+
+
+// Unassigned deliveries
+app.get('/courier/deliveries/available/:companyID/:token', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as courier, 2. get unassigned deliveries, 3. return them
+
+    const ret = {'token':'valid', 'deliveries':[
+        {'id':'1', 'pickup':'d1', 'dropoff':'p1'},
+        {'id':'2', 'pickup':'d2', 'dropoff':'p2'},
+        {'id':'3', 'pickup':'d3', 'dropoff':'p3'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Schedule of deliveries
+app.get('/courier/deliveries/schedule/:companyID/:token', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as courier, 2. get shedule, 3. return it
+
+    const ret = {'token':'valid', 'schedule':[
+        {'id':'1', 'pickup':'d4', 'dropoff':'p4'},
+        {'id':'2', 'pickup':'d5', 'dropoff':'p5'},
+        {'id':'3', 'pickup':'d6', 'dropoff':'p6'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Schedules delivery items
+app.get('/courier/deliveries/items/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as courier, 2. get all deliveries items, 3. return them
+
+    const ret = {'token':'valid', 'deliveryItems':[
+        {'id':'1', 'name':'Pot', 'quantity':'2'},
+        {'id':'2', 'name':'Tree', 'quantity':'2'},
+        {'id':'3', 'name':'Feeder', 'quantity':'2'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Accept a delivery
+app.post('/courier/deliveries/accept/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as courier, 2. accept delivery, 3. return them
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Mark a delivery as ready to be shipped
+app.post('/courier/deliveries/complete/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.id;
+
+    // TODO : 1. Validate token as courier, 2. mark delivery ID as ready to be delivered
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Mark a item while out for delivery as missing
+app.post('/courier/deliveries/missing/:companyID/:token/:orderid/:itemid', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const orderid = req.params.orderid;
+    const itemid = req.params.itemid;
+
+    // TODO : 1. Validate token as courier, 2. add item to new delivery to retry
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Search for companies
+app.get('/company/search/:companyID/:token/:criteria', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const criteria = req.params.criteria;
+
+    // TODO : 1. Validate token as marketing, 2. search for all companies matchig name or description 3. return company info
+
+    const ret = {'token':'valid', 'suppliers':[
+        {'id':'1', 'name':'company1', 'desc':'A company supplying X', 'cc':'44', 'num':'7777777777'},
+        {'id':'2', 'name':'company2', 'desc':'A company supplying Y', 'cc':'44', 'num':'7777777778'},
+        {'id':'3', 'name':'company3', 'desc':'A company supplying Z', 'cc':'44', 'num':'7777777779'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Get the website companies inventory
+app.get('/company/inventory/:companyID/:token', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+
+    // TODO : 1. Validate token as marketing, 2. get own inventory 3. return
+
+    const ret = {'token':'valid', 'items':[
+        {'id':'1', 'name':'item1', 'desc':'An item', 'quantity':'10', 'price':'15.99'},
+        {'id':'2', 'name':'item2', 'desc':'An item', 'quantity':'5', 'price':'26.99'},
+        {'id':'3', 'name':'item3', 'desc':'An item', 'quantity':'18', 'price':'3.99'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Get another companies inventory
+app.get('/company/inventory/:companyID/:token/:id', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const id = req.params.token;
+
+    // TODO : 1. Validate token as marketing, 2. get 'id's' inventory 3. return
+
+    const ret = {'token':'valid', 'items':[
+        {'id':'1', 'name':'item1', 'desc':'An item', 'quantity':'10', 'price':'15.99'},
+        {'id':'2', 'name':'item2', 'desc':'An item', 'quantity':'5', 'price':'26.99'},
+        {'id':'3', 'name':'item3', 'desc':'An item', 'quantity':'18', 'price':'3.99'}
+    ]};
+    res.status(200).json(ret);
+});
+
+// Add a supplier
+app.post('/company/add/:companyID/:token/:name/:desc/:cc/:num/:l1/:postcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const name = req.params.name;
+    const desc = req.params.desc;
+    const cc = req.params.cc;
+    const num = req.params.num;
+    const l1 = req.params.l1;
+    const poscode = req.params.poscode;
+
+    // TODO : 1. Validate token as marketing, 2. Add supplier
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Edit an inventory item
+app.post('/company/inventory/edit/:companyID/:token/:id/:name/:desc/:quantity/:price/:weight/:barcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const inventoryID = req.params.id;
+    const name = req.params.name;
+    const desc = req.params.desc;
+    const quantity = req.params.quantity;
+    const price = req.params.price;
+    const weight = req.params.weight;
+    const barcode = req.params.barcode;
+
+    // TODO : 1. Validate token as marketing, 2. Edit the item
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Add an inventory item
+app.post('/company/inventory/add/:companyID/:token/:id/:name/:desc/:quantity/:price/:weight/:barcode', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const supplyCompanyID = req.params.id;
+    const name = req.params.name;
+    const desc = req.params.desc;
+    const quantity = req.params.quantity;
+    const price = req.params.price;
+    const weight = req.params.weight;
+    const barcode = req.params.barcode;
+
+    // TODO : 1. Validate token as marketing, 2. Add the item
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+// Order an item
+app.post('/company/inventory/order/:companyID/:token/:id/:quantity', async (req, res) => {
+    const companyID = req.params.companyID;
+    const token = req.params.token;
+    const inventoryID = req.params.id;
+    const quantity = req.params.quantity;
+
+    // TODO : 1. Validate token as marketing, 2. Order the quantity of the item through the pipeline
+
+    const ret = {'token':'valid'};
+    res.status(200).json(ret);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Register a new customer
 app.post('/quiz', async (req, res) => {
     const id = await quiz.saveQuizAsync(req.body);
