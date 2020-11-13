@@ -1,29 +1,26 @@
 const connector = require('./db-solution/db-solution-connector');
-const customerQueries = require('./customers/db-customer');
+const sessionManager = require('./session/db-session-manager');
 
-async function addCustomer(companyID, email, password, forename = null, surname = null, dob = null, mobile = null, countryCode = null, addressLine1 = null, postcode = null){
-    id = await customerQueries.addCustomer(connector.con, companyID, email, password, forename, surname, dob, mobile, countryCode, addressLine1, postcode);
-    return `{customer : ${id}}`;
-}
 
-// TODO : 1. Check user exists and get ID & name, 2. create new session, 3. identify role, 4. return token
-async function logIn(companyID, email, password){
+async function logIn(res, companyID, email, password){
 
-    return {'login':'valid', 'id':'1', 'name':'name', 'roles':['marketing'], 'token':'somehash'};
+    return await sessionManager.logIn(res, connector.con, companyID, email, password);
+
 }
 
 
 // TODO : 1. Check user exists, 2. create new user, 3. create new account, 4. create session, 5. return token
-async function register(companyID, email, password, fn, sn, num){
-
-    return {'register':'valid', 'id':'1', 'token':'somehash'};
+async function register(res, companyID, email, password, fn, sn, num){
+    
+    return await sessionManager.addCustomer(res, companyID, email, password, fn, sn, null, num);
 }
 
 
 // TODO : 1. Validate token as admin, 2. collect role info for email, 3. return info
-async function getAccount(companyID, token, email){
-
-    return {'token':'valid', 'accountid':'1', 'roles':[{'id':'1', 'name':'customerservice'}, {'id':'2', 'name':'warehouse'}]};
+async function getAccount(res, companyID, token, email){
+    await sessionManager.getAccount(res, companyID, token, email);
+    ret = {'token':'valid', 'accountid':'1', 'roles':[{'id':'1', 'name':'customerservice'}, {'id':'2', 'name':'warehouse'}]};
+    res.status(200).json(ret);
 }
 
 // TODO : 1. Validate token as admin, 2. remove role for id
@@ -293,7 +290,6 @@ async function orderItem(companyID, token, inventoryID, quantity){
 }
 
 module.exports = {
-    addCustomer,
     logIn,
     register,
     getAccount,

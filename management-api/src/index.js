@@ -28,8 +28,7 @@ app.get('/login/:companyID/:email/:password', async (req, res) => {
     const companyID = req.params.companyID;
     const email = req.params.email;
     const password = req.params.password;
-    const ret = await dbmanager.logIn(companyID, email, password);
-    res.status(200).json(ret);
+    await dbmanager.logIn(res, companyID, email, password);
 });
 
 // Register a user
@@ -40,8 +39,7 @@ app.get('/register/:companyID/:email/:password/:fn/:sn/:num', async (req, res) =
     const forename = req.params.fn;
     const surname = req.params.sn;
     const num = req.params.num;
-    const ret = await dbmanager.register(companyID, email, password, forename, surname, num);
-    res.status(200).json(ret);
+    await dbmanager.register(res, companyID, email, password, forename, surname, num);
 });
 
 // Get account for company with given email
@@ -49,8 +47,7 @@ app.get('/admin/:companyID/:token/:email', async (req, res) => {
     const companyID = req.params.companyID;
     const token = req.params.token;
     const email = req.params.email;
-    const ret = await dbmanager.getAccount(companyID, token, email);
-    res.status(200).json(ret);
+    await dbmanager.getAccount(res, companyID, token, email);
 });
 
 // Remove role for account for company
@@ -69,7 +66,7 @@ app.post('/admin/add/:companyID/:token/:accountid/:roleid', async (req, res) => 
     const token = req.params.token;
     const accountid = req.params.accountid;
     const roleid = req.params.roleid;
-    const ret = await dbmanager.addRole(companyID, token, accountid, roleid);
+    await dbmanager.addRole(companyID, token, accountid, roleid);
     res.status(200).json(ret);
 });
 

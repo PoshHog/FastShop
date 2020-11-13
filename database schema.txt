@@ -156,7 +156,7 @@ sessionID int not null auto_increment,
 accountID int not null, 
 sessionToken varchar(255) not null, 
 sessionIP varchar(15), 
-sessionActive bool not null, 
+sessionActive bool not null default true, 
 sessionStart timestamp on update current_timestamp, 
 primary key(sessionID), 
 foreign key(accountID) references customeraccounts(accountID)
@@ -165,7 +165,7 @@ create table accessroles(
 roleID int not null auto_increment, 
 roleName varchar(255) not null, 
 roleDesc varchar(255), 
-roleTier bit, 
+roleTier int, 
 editLock boolean not null default false, 
 editLockTime timestamp on update current_timestamp,
 primary key(roleID)
@@ -180,3 +180,10 @@ primary key(adminID),
 foreign key(accountID) references customeraccounts(accountID), 
 foreign key(roleID) references accessroles(roleID)
 );
+insert into accessroles(roleName, roleDesc, roleTier) 
+values('customer', 'a customer of a company', 1),
+('admin', 'administrator for a companys accounts', 4),
+('customerservice', 'the role for customer service in a company', 3),
+('marketing', 'the role for marketing in a company which covers mainly inventory management', 3),
+('courier', 'a courier role for the company', 2), 
+('warehouse' , 'a warehouse operative role', 2);
