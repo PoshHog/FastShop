@@ -1,31 +1,29 @@
 {
-  "name": "management-api",
+  "name": "quiz-web",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "description": "",
+  "main": "index.html",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "mocha src/tests --recursive"
+    "postinstall": "npm run copy-libs",
+    "copy-libs": "cpx \"ui-web/node_modules/{angular/angular.js,angular-route/angular-route.js}\" src/lib -C",
+    "start": "http-server src -a localhost -p 8000 -c-1 -d false --proxy http://localhost:8000?",
+    "build": "rimraf \"dist\" && cd src && cpx \"**/*\" ../dist"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "cryptojs": "^2.5.3",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "express-async-errors": "^3.1.1",
-    "lodash": "^4.17.20",
-    "mysql": "^2.18.1",
-    "underscore": "^1.11.0"
-  },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "chai-as-promised": "^7.1.1",
+    "angular-mocks": "^1.8.0",
     "cpx": "^1.5.0",
-    "mocha": "^8.1.3",
-    "rimraf": "^3.0.2",
-    "sinon": "^9.0.3"
+    "http-server": "^0.12.3",
+    "jasmine-core": "^3.6.0",
+    "karma": "^5.2.3",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^4.0.1",
+    "rimraf": "^3.0.2"
   },
-  "keywords": [],
-  "description": ""
+  "dependencies": {
+    "angular": "^1.8.0",
+    "angular-route": "^1.8.0",
+    "cryptojs": "^2.5.3"
+  }
 }
