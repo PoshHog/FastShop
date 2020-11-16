@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 // This is just for SSL certificate verification!
-app.use('/.well-known/pki-validation', express.static('src/pki-validation/'));
+app.use('/.well-known/pki-validation', express.static('management-api/src/pki-validation/'));
 
 function check(value){
     if(value == "-"){
