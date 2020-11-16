@@ -9,7 +9,7 @@
     "start": "http-server src -a localhost -p 8000 -c-1 -d false --proxy http://localhost:8000?",
     "test": "karma start karma.conf.js",
     "test-ci": "karma start karma.conf.js --single-run --browsers ChromeHeadlessNoSandbox",
-    "build": "rimraf \"dist\" && cd src && cpx \"**/*\" ../dist"
+    "build": "rimraf \"dist\" && cd src && cpx \"**/*\"/dist"
   },
   "author": "",
   "license": "ISC",
