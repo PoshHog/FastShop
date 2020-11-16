@@ -13,7 +13,7 @@ frontend:
   artifacts:
     baseDirectory: ui-web/dist/
     files:
-      - 'ui-web/**/*'
+      - '**/*'
   cache:
     paths:
-      - ui-web/node_modules/**/*
+      - node_modules/**/*
