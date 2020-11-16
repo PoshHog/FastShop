@@ -5,6 +5,7 @@ angular.module('app').controller('LoginController', ['$scope', '$location', '$ro
         $scope.loginState = "Logging in...";
         try {
             const response = await LoginService.login($scope.email, $scope.password);
+            console.log(response);
             $scope.loginResult = response;
             $scope.loginValid = response.login;
             if($scope.loginValid == "valid"){
@@ -14,7 +15,6 @@ angular.module('app').controller('LoginController', ['$scope', '$location', '$ro
                 localStorage.setItem("fastshop.loginName", response.name);
                 $scope.roles = response.roles;
                 $scope.primaryRole = $scope.roles[0];
-                console.log($scope.primaryRole)
                 if($scope.primaryRole == "customer"){
                     $location.path("/home").replace();
                 }else if($scope.primaryRole == "admin"){
