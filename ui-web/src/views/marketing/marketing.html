@@ -1,0 +1,114 @@
+<div>
+
+    <h1>Marketing</h1>
+
+    <button ng-click="view='suppliers'">Suppliers</button>
+    <button ng-click="view='inventory'">Inventory</button>
+    <p>Order Quantity : <input type="number" ng-model="orderQuantity" placeholder="5"></p>
+
+    <div ng-show="view=='suppliers'">
+        <h3>Suppliers</h3>
+
+        <div ng-show="viewSupplier=='all'">
+            <h5>All</h5>
+            <button ng-click="viewSupplier='add'">Add Supplier</button>
+            <p>Search : <input type="search" ng-model="searchBox"><button ng-click="search(searchBox)">Go</button></p>
+            <table >
+                <thead>
+                    <th>Name</th><th>Description</th><th>Country Code</th><th>Phone Number</th><th>View</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="supplier in supplierResult">
+                        <td>{{supplier.name}}</td>
+                        <td>{{supplier.desc}}</td>
+                        <td>{{supplier.cc}}</td>
+                        <td>{{supplier.num}}</td>
+                        <td><button ng-click="viewSupplierInventory(supplier)">View</button> </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div ng-show="viewSupplier=='add'">
+
+            <h5>Add</h5>
+
+            <div>
+                <p><label for="addName">Name : </label><input id="addName" type="text" ng-model="addName" placeholder="John Smith Ltd"></p>
+                <p><label for="addDesc">Description : </label><input id="addDesc" type="text" ng-model="addDesc" placeholder="Annonymous trader"></p>
+                <p><label for="addCC">Country Code : </label><input id="addCC" type="number" ng-model="addCC" value="44"></p>
+                <p><label for="addNum">Phone number : </label><input id="addNum" type="tel" ng-model="addNum"></p>
+                <p><label for="addL1">Address Line 1 : </label><input id="addL1" type="text" ng-model="addL1"></p>
+                <p><label for="addPostcode">Postcode : </label><input id="addPostcode" type="text" ng-model="addPostcode"></p>
+            </div>
+            <button ng-click="addSupplier()">Add Supplier</button>
+            <button ng-click="viewSupplier='all'">Back</button>
+        </div>
+
+        <div ng-show="!(viewSupplier=='all'||viewSupplier=='add')">
+
+            <h5>{{viewSupplier.name}} - Inventory</h5>            
+
+            <button ng-hide="viewSupplier.user==true||addItemShow" ng-click="addItemShow=true">Add Item</button>
+            <button ng-hide="!addItemShow" ng-click="addItemShow=false">Cancel</button>
+            <table >
+                <thead>
+                    <th>Product</th><th>Description</th><th>Quantity</th><th>Price</th><th>Weight KG</th><th>Barcode</th><th>Order</th>
+                </thead>
+                <tbody>
+                    <tr ng-show="addItemShow">
+                        <td><input type="text" ng-model="addItemName" placeholder="Fishcake"></td>
+                        <td><input type="text" ng-model="addItemDesc" placeholder="A battered mix of fish, mash and herb"></td>
+                        <td><input type="text" ng-model="addItemQuantity" placeholder="5"></td>
+                        <td><input type="text" ng-model="addItemPrice" placeholder="1.99"></td>
+                        <td><input type="text" ng-model="addItemWeight" placeholder="0.2"></td>
+                        <td><input type="number" ng-model="addItemBarcode" placeholder="##########"></td>
+                        <td><button ng-click='addItem()'>Add</button></td>
+                    </tr>
+                    <tr ng-repeat="item in supplierInventoryResult">
+                        <td>{{item.name}}</td>
+                        <td>{{item.desc}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.weight}}</td>
+                        <td>{{item.barcode}}</td>
+                        <td><button ng-click='reOrder(item)'>Order</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button ng-click="viewSupplier='all'">Back</button>
+        </div>
+
+    </div>
+
+    <div ng-show="view=='inventory'">
+        <h3>Inventory</h3>
+
+        <table >
+            <thead>
+                <th>Product</th><th>Description</th><th>Quantity</th><th>Price</th><th>Edit</th><th>Re-order</th>
+            </thead>
+            <tbody>
+                <tr ng-show="itemEdit!='false'" ng-hide="itemEdit=='false'">
+                    <td><input type="text" ng-model="itemEdit.name" value="{{itemEdit.name}}"></td>
+                    <td><input type="text" ng-model="itemEdit.desc" value="{{itemEdit.desc}}"></td>
+                    <td><input type="text" ng-model="itemEdit.quantity" value="{{itemEdit.quantity}}">-(for correction only)</td>
+                    <td><input type="text" ng-model="itemEdit.price" placeholder="{{itemEdit.price}}"></td>
+                    <td><button ng-click='editItem("false")'>Save</button></td>
+                    <td>-</td>
+                </tr>
+                <tr ng-repeat="item in inventoryResult" ng-hide="itemEdit==item">
+                    <td>{{item.name}}</td>
+                    <td>{{item.desc}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.price}}</td>
+                    <td><button ng-click="editItem(item)">Edit</button> </td>
+                    <td><button ng-click='reOrder(item)'>Re-order</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

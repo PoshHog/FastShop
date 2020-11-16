@@ -1,0 +1,112 @@
+<div>
+
+    <h1>Customer Service</h1>
+
+    <div ng-show="currentView=='search'">
+        <div class="customersearch">
+            <h3>Search</h3>
+            <table>
+                <tr><td>Account email : </td><td><input type="email" ng-model="email" placeholder="example@example.com"></td></tr>
+                <tr><td>Forename : </td><td><input type="text" ng-model="fn" placeholder="John"></td></tr>
+                <tr><td>Surname : </td><td><input type="text" ng-model="sn" placeholder="Smith"></td></tr>
+                <tr><td>Phone : </td><td><input type="number" ng-model="num" placeholder=""></td></tr>
+                <tr><td>Postcode : </td><td><input type="text" ng-model="postcode" placeholder=""></td></tr>
+            </table>
+            <p> <button ng-click="searchCustomers()">Search</button></p>
+            <p><button ng-click="addCustomer()">Add Customer</button></p>
+            <p ng-show="message.length>0">{{message}}</p>
+        </div>
+        <table >
+            <thead>
+                <th>Forename</th><th>Surname</th><th>Email</th><th>Phone</th><th>Address Line 1</th><th>Postcode</th><th>Edit Details</th><th>View Orders</th>
+            </thead>
+            <tbody>
+                <tr ng-show="customerEdit!='false'" ng-hide="customerEdit=='false'">
+                    <td><input type="text" ng-model="customerEdit.fn" value="{{customerEdit.fn}}"></td>
+                    <td><input type="text" ng-model="customerEdit.sn" value="{{customerEdit.sn}}"></td>
+                    <td><input type="text" ng-model="customerEdit.email" value="{{customerEdit.email}}"></td>
+                    <td><input type="text" ng-model="customerEdit.num" value="{{customerEdit.num}}"></td>
+                    <td><input type="text" ng-model="customerEdit.l1" value="{{customerEdit.l1}}"></td>
+                    <td><input type="text" ng-model="customerEdit.postcode" value="{{customerEdit.postcode}}"></td>
+                    <td ng-click='editDetails("false")'>Save</td>
+                    <td>-</td>
+                </tr>
+                <tr ng-repeat="customer in searchResult" ng-hide="customerEdit==customer">
+                    <td>{{customer.fn}}</td>
+                    <td>{{customer.sn}}</td>
+                    <td>{{customer.email}}</td>
+                    <td>{{customer.num}}</td>
+                    <td>{{customer.l1}}</td>
+                    <td>{{customer.postcode}}</td>
+                    <td ng-click='editDetails(customer)'>Edit</td>
+                    <td ng-click='viewOrders(customer.id)'>View</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div ng-show="currentView=='account'">
+        <h3>Orders</h3>
+        <table >
+            <thead>
+                <th>Order ID</th><th>Order Date</th><th>Delivery House No</th><th>Delivery Postcode</th><th>Status</th><th>View</th><th>Edit</th><th>Cancel</th>
+            </thead>
+            <tbody>
+                <tr ng-show="orderEdit!='false'" ng-hide="orderEdit=='false'">
+                    <td>{{orderEdit.id}}</td>
+                    <td>{{orderEdit.date}}</td>
+                    <td><input type="text" ng-model="orderEdit.l1" value="{{orderEdit.l1}}"></td>
+                    <td><input type="text" ng-model="orderEdit.postcode" value="{{orderEdit.postcode}}"></td>
+                    <td>
+                        <input ng-show="changeStatusAllowed=='true'" type="text" ng-model="orderEdit.status" value="{{orderEdit.status}}">
+                        <a ng-show="changeStatusAllowed=='false'">{{orderEdit.status}}</a>
+                    </td>
+                    <td>-</td>
+                    <td ng-click='editOrder("false")'>Save</td>
+                    <td>-</td>
+                </tr>
+                <tr ng-repeat="order in transactionsResult" ng-hide="orderEdit==order">
+                    <td>{{order.id}}</td>
+                    <td>{{order.date}}</td>
+                    <td>{{order.l1}}</td>
+                    <td>{{order.postcode}}</td>
+                    <td>{{order.status}}</td>
+                    <td><a ng-click="viewItems(order)">View</a> </td>
+                    <td>
+                        <a ng-show="order.status=='processing'||changeStatusAllowed=='true'" ng-click='editOrder(order)'>Edit</a>
+                        <a ng-hide="order.status=='processing'||changeStatusAllowed=='true'">-</a> </td>
+                    <td><a ng-show="order.status=='processing'" ng-click='cancelOrder(order)'>Cancel</a><a ng-hide="order.status=='processing'">-</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="currentView='search'">Back</button>
+    </div>
+
+    <div ng-show="currentView=='order'">
+        <h3>Orders</h3>
+        <table >
+            <thead>
+                <th>Product Name</th><th>Quantity</th><th>Status</th><th>Edit</th><th>Remove</th>
+            </thead>
+            <tbody>
+                <tr ng-show="itemEdit!='false'" ng-hide="itemEdit=='false'">
+                    <td>{{itemEdit.name}}</td>
+                    <td><input type="text" ng-model="itemEdit.quantity" value="{{itemEdit.quantity}}"></td>
+                    <td>{{chosenOrder.status}}</td>
+                    <td ng-click='editItem("false")'>Save</td>
+                    <td>-</td>
+                </tr>
+                <tr ng-repeat="item in itemsResult" ng-hide="itemEdit==item">
+                    <td>{{item.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{chosenOrder.status}}</td>
+                    <td><a ng-show="chosenOrder.status=='processing'" ng-click='editItem(item)'>Edit</a><a ng-hide="chosenOrder.status=='processing'">-</a> </td>
+                    <td><a ng-show="chosenOrder.status=='processing'" ng-click='cancelItem(item)'>Remove</a><a ng-hide="chosenOrder.status=='processing'">-</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <button ng-click="currentView='account'">Back</button>
+    </div>
+
+</div>

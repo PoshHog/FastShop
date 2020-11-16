@@ -1,0 +1,8 @@
+<div>
+    <h1>Login</h1>
+    <input type="email" ng-model="email" placeholder="example@example.com">
+    <input type="password" ng-model="password" placeholder="password">
+    <button ng-click="login()">{{loginState}}</button>
+    <p ng-show="loginResult">{{loginMessage}}</p>
+    <p>Or <a href="" ng-click='goToRegister()'>register</a> here</p>
+</div>
