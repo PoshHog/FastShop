@@ -1,10 +1,10 @@
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-  host: "localhost",
+  host: "fast-shop-db.cbpqdmidnsld.us-west-2.rds.amazonaws.com",
   port: "3306",
-  user: "api",
-  password: "management_api_verification",
+  user: "root",
+  password: "sEgmlTIsOE3opLIpcBBI",
 });
 
 con.connect(function(err) {
